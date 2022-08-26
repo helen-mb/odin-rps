@@ -45,11 +45,20 @@ function getComputerChoice() {
     console.log(computerSelection);
 }
 
-getComputerChoice();
-
 // A function that plays a single round: 'playRound()' 
 //    Parameters: 'playerSelection', 'computerSelection'
+
+let playerSelection;
+
+function playRound(playerSelection, computerSelection) {
 //    Gets player's selection through prompt().
+    playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...');
+    console.log(playerSelection);
+    getComputerChoice();
+}
+
+playRound();
+
 //    Makes player's selection case IN-sensitive.
 //    and declares a winner by returning a string.
 
