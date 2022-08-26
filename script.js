@@ -30,11 +30,9 @@
 //    (* Probably involves random number generation; 1, 2, or 3?)
 
 let computerSelection;
-
 function getComputerChoice() {
     computerSelection = Math.floor(Math.random() * 3) + 1;
-
-//  * converting numerical value into string values    
+    //  * converting numerical value into string values    
     if (computerSelection == 1) {
         computerSelection = 'ROCK';
     }
@@ -44,7 +42,6 @@ function getComputerChoice() {
     else {
         computerSelection = 'SCISSORS';
     }
-
     return computerSelection;
 }
 
@@ -52,22 +49,23 @@ function getComputerChoice() {
 // Parameters: 'playerSelection', 'computerSelection'
 
 let playerSelection;
-
 function playRound(playerSelection, computerSelection) {
-// Gets player's selection through prompt().
-// Makes player's selection case IN-sensitive.
+
+    // Gets player's selection through prompt().
+    // Makes player's selection case IN-sensitive by converting it to lower case.
     playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
     console.log(playerSelection);
-
-//  * Passing getComputerChoice() as the second argument to playRound().
+    //  * Passing getComputerChoice() as the second argument to playRound().
     computerSelection = getComputerChoice();
     console.log(computerSelection);
 
-//  * Using a switch statement to concatenate the player selections into winning or losing combinations.
-// Declaring a winner ('round outcome') by returning a string
+    //  * Using a switch statement to concatenate the player selections into winning or losing combinations.
+    // Declaring a winner ('round outcome') by returning a string
     let outcome;
     switch(playerSelection + computerSelection) {
-        case 'rockROCK' || 'paperPAPER' || 'scissorsSCISSORS':
+        case 'rockROCK':
+        case 'paperPAPER':
+        case 'scissorsSCISSORS':
             outcome = 'Meh, it\'s a Draw. :?'
             break;
         case 'rockPAPER':
@@ -95,11 +93,18 @@ function playRound(playerSelection, computerSelection) {
     return outcome;
 }
 
-playRound();
-
-
 // A function that plays five rounds: 'game()'
 //    (*Loops may be a good choice)
 //    and displays results of each round in the console
 //    and keeps score to declare an ultimate winner or loser.
 
+let roundNumber;
+function game() {
+    // i represents the round number -- there will be 5 rounds.
+    for (let i = 1; i < 6; i++) {
+        roundNumber = i;
+        playRound();
+    }
+}
+
+game();
