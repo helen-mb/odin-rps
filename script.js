@@ -33,16 +33,18 @@ let computerSelection;
 
 function getComputerChoice() {
     computerSelection = Math.floor(Math.random() * 3) + 1;
-//  * converting numerical value into string values -- may not be necessary in this function    
-//    if (computerSelection == 1) {
-//        computerSelection = 'ROCK';
-//    }
-//    else if (computerSelection == 2) {
-//        computerSelection = 'PAPER';
-//    }
-//    else {
-//        computerSelection = 'SCISSORS';
-//    }
+
+//  * converting numerical value into string values    
+    if (computerSelection == 1) {
+        computerSelection = 'ROCK';
+    }
+    else if (computerSelection == 2) {
+        computerSelection = 'PAPER';
+    }
+    else {
+        computerSelection = 'SCISSORS';
+    }
+
     return computerSelection;
 }
 
@@ -55,33 +57,42 @@ function playRound(playerSelection, computerSelection) {
 // Gets player's selection through prompt().
 // Makes player's selection case IN-sensitive.
     playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
+    console.log(playerSelection);
+
 //  * Passing getComputerChoice() as the second argument to playRound().
     computerSelection = getComputerChoice();
     console.log(computerSelection);
-//  * Converting player's choice to numerical value - will compare to computer choice later
-    if (playerSelection == 'rock') {
-        playerSelection = 1;
+
+//  * Using a switch statement to concatenate the player selections into winning or losing combinations.
+// Declaring a winner ('round outcome') by returning a string
+    let outcome;
+    switch(playerSelection + computerSelection) {
+        case 'rockROCK' || 'paperPAPER' || 'scissorsSCISSORS':
+            outcome = 'Meh, it\'s a Draw. :?'
+            break;
+        case 'rockPAPER':
+            outcome = 'Oh no! Paper beats rock! :('
+            break;
+        case 'rockSCISSORS':
+            outcome = 'Yay! Rock beats scissors! :D'
+            break;
+        case 'paperROCK':
+            outcome = 'Yay! Paper beats rock! :D'
+            break;
+        case 'paperSCISSORS':
+            outcome = 'Oh no! Scissors beats paper! :('
+            break;
+        case 'scissorsROCK':
+            outcome = 'Oh no! Rock beats scissors! :('
+            break;
+        case 'scissorsPAPER':
+            outcome = 'Yay! Scissors beats paper! :D'
+            break;
+        default:
+            outcome = 'Hey, that\'s not how you play! >:(';
     }
-    else if (playerSelection == 'paper') {
-        playerSelection = 2;
-    }
-    else if (playerSelection == 'scissors') {
-        playerSelection = 3;
-    }
-    console.log(playerSelection);
-//  * Determining winner by subtracting playerSelection from computerSelection
-//    declares a winner by returning a string.
-    let winner;
-    if (playerSelection - computerSelection == 1 || playerSelection - computerSelection == -2) {
-        winner = 'You Win! :D'
-    }
-    else if (playerSelection - computerSelection == -1 || playerSelection - computerSelection == 2) {
-        winner = 'You lose. :('
-    }
-    else {
-        winner = 'It\'s a Draw... :?'
-    }
-    alert(winner);
+    alert(outcome);
+    return outcome;
 }
 
 playRound();
