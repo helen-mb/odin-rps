@@ -29,6 +29,24 @@
 //    Returns either 'Rock' 'Paper' or 'Scissors'
 //    (*Probably involves random number generation; 1, 2, or 3?)
 
+let computerSelection;
+
+function getComputerChoice() {
+    computerSelection = Math.floor(Math.random() * 3) + 1;
+    if (computerSelection == 1) {
+        computerSelection = 'ROCK';
+    }
+    else if (computerSelection == 2) {
+        computerSelection = 'PAPER';
+    }
+    else {
+        computerSelection = 'SCISSORS';
+    }
+    console.log(computerSelection);
+}
+
+getComputerChoice();
+
 // A function that plays a single round: 'playRound()' 
 //    Parameters: 'playerSelection', 'computerSelection'
 //    Gets player's selection through prompt().
