@@ -52,14 +52,14 @@ let playerSelection;
 
 function playRound(playerSelection, computerSelection) {
 //    Gets player's selection through prompt().
-    playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...');
+//    Makes player's selection case IN-sensitive.
+    playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
     console.log(playerSelection);
-    getComputerChoice();
 }
 
 playRound();
 
-//    Makes player's selection case IN-sensitive.
+
 //    and declares a winner by returning a string.
 
 // A function that plays five rounds: 'game()'
