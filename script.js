@@ -49,6 +49,7 @@ function getComputerChoice() {
 // Parameters: 'playerSelection', 'computerSelection'
 
 let playerSelection;
+let outcome;
 function playRound(playerSelection, computerSelection) {
 
     // Gets player's selection through prompt().
@@ -61,7 +62,6 @@ function playRound(playerSelection, computerSelection) {
 
     //  * Using a switch statement to concatenate the player selections into winning or losing combinations.
     // Declaring a winner ('round outcome') by returning a string
-    let outcome;
     switch(playerSelection + computerSelection) {
         case 'rockROCK':
         case 'paperPAPER':
@@ -98,13 +98,43 @@ function playRound(playerSelection, computerSelection) {
 //    and displays results of each round in the console
 //    and keeps score to declare an ultimate winner or loser.
 
-let roundNumber;
 function game() {
-    // i represents the round number -- there will be 5 rounds.
+    let roundNumber;
+    let computerScore = 0;
+    let playerScore = 0;
+    // * Adding 5 playable rounds to a game.
     for (let i = 1; i < 6; i++) {
         roundNumber = i;
         playRound();
+        // * Changing the scores depending on the outcome of each round.
+        if (outcome.includes('Yay!')) {
+            computerScore += 0;
+            playerScore += 1;
+        } 
+        else if (outcome.includes('Oh no!')) {
+            computerScore += 1;
+            playerScore += 0;
+        }
+        else {
+            computerScore += 0;
+            playerScore += 0;
+        }
+        // Displaying the results of each round in the console.
+        console.log(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
     }
+    // * Declaring an ultimate winner
+    let winner;
+    if (computerScore < playerScore) { 
+        winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
+    }
+    else if (computerScore > playerScore) { 
+        winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
+    }
+    else {
+        winner = `It\'s a tie! ${computerScore} vs. ${playerScore}. How dull...`
+    }
+    console.log(winner);
+    alert(winner);
 }
 
 game();
