@@ -1,72 +1,39 @@
-// Your game is going to play against the computer, 
-// so begin with a function called getComputerChoice 
-// that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. 
-// We’ll use this function in the game to make the computer’s play.
-
-// Write a function that plays a single round of Rock Paper Scissors. 
-// The function should take two parameters - the playerSelection and computerSelection 
-// - and then return a string that declares the winner of the round 
-// like so: "You Lose! Paper beats Rock"
-
-// Make your function’s playerSelection parameter case-insensitive 
-// (so users can input rock, ROCK, RocK or any other variation).
-// Important note: you want to return the results of this function call, not console.log() them. 
-// You’re going to use what you return later on, 
-// but let’s test this function by using console.log to see the results.
-
-// Write a NEW function called game(). 
-// Call the playRound function inside of this one to play a 5 round game 
-// that keeps score and reports a winner or loser at the end.
-
-// At this point you should be using console.log() to display 
-// the results of each round and the winner at the end.
-// Use prompt() to get input from the user. 
-// --
-
-
-
-// A function for computer's play: 'getComputerChoice()'
-//    Returns either 'Rock' 'Paper' or 'Scissors'
-//    (* Probably involves random number generation; 1, 2, or 3?)
-
+// A function for the computer's play
 let computerSelection;
 function getComputerChoice() {
     computerSelection = Math.floor(Math.random() * 3) + 1;
-    //  * converting numerical value into string values    
+
+    // Converting numerical values into string values    
     if (computerSelection == 1) {
         computerSelection = 'ROCK';
-    }
-    else if (computerSelection == 2) {
+    } else if (computerSelection == 2) {
         computerSelection = 'PAPER';
-    }
-    else {
+    } else {
         computerSelection = 'SCISSORS';
     }
+    // Returning the computerSelection to be used in the playRound() function, below
     return computerSelection;
 }
 
-// A function that plays a single round: 'playRound()' 
-// Parameters: 'playerSelection', 'computerSelection'
-
+// A function that plays a single round 
 let playerSelection;
 let outcome;
 function playRound(playerSelection, computerSelection) {
 
-    // Gets player's selection through prompt().
-    // Makes player's selection case IN-sensitive by converting it to lower case.
+    // Gets player's selection for the first argument and makes it case in-sensitive
     playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
     console.log(playerSelection);
-    //  * Passing getComputerChoice() as the second argument to playRound().
+
+    // Passing getComputerChoice() for the second argument to playRound()
     computerSelection = getComputerChoice();
     console.log(computerSelection);
 
-    //  * Using a switch statement to concatenate the player selections into winning or losing combinations.
-    // Declaring a winner ('round outcome') by returning a string
+    // Using a switch statement to concatenate the opposing selections into winning or losing combinations
     switch(playerSelection + computerSelection) {
         case 'rockROCK':
         case 'paperPAPER':
         case 'scissorsSCISSORS':
-            outcome = 'Meh, it\'s a Draw. :?'
+            outcome = 'Sorry, it\'s a Draw. :?'
             break;
         case 'rockPAPER':
             outcome = 'Oh no! Paper beats rock! :('
@@ -87,51 +54,51 @@ function playRound(playerSelection, computerSelection) {
             outcome = 'Yay! Scissors beats paper! :D'
             break;
         default:
-            outcome = 'Hey, that\'s not how you play! >:(';
+            outcome = 'Sorry, what was that? :?';
     }
-    alert(outcome);
+    // Returning the round outcome so the game() function can keep score, below
     return outcome;
 }
 
-// A function that plays five rounds: 'game()'
-//    (*Loops may be a good choice)
-//    and displays results of each round in the console
-//    and keeps score to declare an ultimate winner or loser.
-
+// A function that plays five rounds and keeps score
 function game() {
-    let roundNumber;
+    let round;
     let computerScore = 0;
     let playerScore = 0;
-    // * Adding 5 playable rounds to a game.
-    for (let i = 1; i < 6; i++) {
-        roundNumber = i;
+
+    // Using a while loop to play the best of five rounds of playRound()
+    let i = 1
+    while (i <= 5) {
+        round = i;
         playRound();
-        // * Changing the scores depending on the outcome of each round.
-        if (outcome.includes('Yay!')) {
+
+        // Changing the scores depending on the outcome of each round
+        // A round does not count if it was a draw or the player input an invalid word
+        if (outcome.includes(!'Sorry')) {
+            continue
+        } else if (outcome.includes('Yay!')) {
             computerScore += 0;
             playerScore += 1;
-        } 
-        else if (outcome.includes('Oh no!')) {
+            i++;
+        } else if (outcome.includes('Oh no!')) {
             computerScore += 1;
             playerScore += 0;
-        }
-        else {
-            computerScore += 0;
-            playerScore += 0;
-        }
-        // Displaying the results of each round in the console.
+            i++;
+        } 
+
+        // Declaring the outcome and score of each round
         console.log(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
+        alert(outcome);
     }
-    // * Declaring an ultimate winner
+
+    // Declaring an ultimate winner
     let winner;
     if (computerScore < playerScore) { 
         winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
-    }
-    else if (computerScore > playerScore) { 
+    } else if (computerScore > playerScore) { 
         winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
-    }
-    else {
-        winner = `It\'s a tie! ${computerScore} vs. ${playerScore}. How dull...`
+    } else {
+        winner = `It\'s a tie! ${computerScore} vs. ${playerScore}. How did that happen...?`
     }
     console.log(winner);
     alert(winner);
