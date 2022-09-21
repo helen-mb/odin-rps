@@ -74,9 +74,8 @@ function game() {
 
         // Changing the scores depending on the outcome of each round
         // A round does not count if it was a draw or the player input an invalid word
-        if (outcome.includes(!'Sorry')) {
-            continue
-        } else if (outcome.includes('Yay!')) {
+        
+        if (outcome.includes('Yay!')) {
             computerScore += 0;
             playerScore += 1;
             i++;
