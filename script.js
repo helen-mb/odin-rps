@@ -79,13 +79,12 @@ function game() {
         } else if (outcome.includes('Yay!')) {
             computerScore += 0;
             playerScore += 1;
-            i++;
         } else if (outcome.includes('Oh no!')) {
             computerScore += 1;
             playerScore += 0;
-            i++;
         } 
-
+        i++;
+        
         // Declaring the outcome and score of each round
         console.log(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
         alert(outcome);
