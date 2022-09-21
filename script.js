@@ -15,17 +15,26 @@ function getComputerChoice() {
     return computerSelection;
 }
 
-// A function that plays a single round 
+// Allowing the buttons to initiate playRound(), capture the player's selection, and pass the playRound() arguments
+let playButtons = document.getElementsByClassName('playButton');
 let playerSelection;
+for (i=0; i<playButtons.length; i++) {
+    // *** Adding an event listener to the buttons that starts a round and returns the id of the button pressed
+    playButtons.item(i).addEventListener('click', event => {
+        playerSelection = event.target.id;
+        playRound(playerSelection, getComputerChoice());
+    })
+}
+
+// A function that plays a single round 
 let outcome;
 function playRound(playerSelection, computerSelection) {
 
     // Gets player's selection for the first argument and makes it case in-sensitive
-    playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
+    // playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
+
     console.log(playerSelection);
 
-    // Passing getComputerChoice() for the second argument to playRound()
-    computerSelection = getComputerChoice();
     console.log(computerSelection);
 
     // Using a switch statement to concatenate the opposing selections into winning or losing combinations
@@ -68,7 +77,7 @@ function game() {
 
     // Using a while loop to play the best of five rounds of playRound()
     let i = 1
-    while (i <= 5) {
+    while (i > 0) { // TEMPORARILY REMOVED LOGIC TO PLAY ONLY 5 ROUNDS
         round = i;
         playRound();
 
@@ -103,4 +112,4 @@ function game() {
     alert(winner);
 }
 
-game();
+//game();
