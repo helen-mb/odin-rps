@@ -1,3 +1,46 @@
+const gameBoard = document.getElementById('gameBoard');
+const startGame = document.getElementById('startGame');
+// A function to set up the game board
+let playGame = function () {
+    // The start button replaces itself with an instruction and a new set of play buttons 
+    gameBoard.removeChild(startGame);
+    const newP = document.createElement('p');
+    const instruction = document.createTextNode('Choose your weapon!');
+    newP.appendChild(instruction);
+    gameBoard.appendChild(newP);
+    // Creates the buttons that initiate a round
+    // The rock button
+    const rockButton = document.createElement('button');
+    const rock = document.createTextNode('rock')
+    rockButton.setAttribute('id', 'rock');
+    rockButton.appendChild(rock);
+    gameBoard.appendChild(rockButton);
+    // The paper button
+    const paperButton = document.createElement('button');
+    const paper = document.createTextNode('paper')
+    paperButton.setAttribute('id', 'paper');
+    paperButton.appendChild(paper);
+    gameBoard.appendChild(paperButton);
+    // The scissors button
+    const scissorsButton = document.createElement('button');
+    const scissors = document.createTextNode('scissors')
+    scissorsButton.setAttribute('id', 'scissors');
+    scissorsButton.appendChild(scissors);
+    gameBoard.appendChild(scissorsButton);
+
+    // Adding an event listener to the buttons that initiates a round, and collects the player and computer's selections
+    let playButtons = document.querySelectorAll('button');
+    playButtons.forEach(button => {;
+        button.addEventListener('click', event => {
+            playerSelection = event.target.id;
+            playRound(playerSelection, getComputerSelection());
+            updateScore();
+        })
+    })
+}
+// Adding an event listener to the start button so it sets up the game board when clicked
+startGame.addEventListener('click', playGame);
+
 // A function for the computer's action
 let computerSelection;
 function getComputerSelection() {
@@ -15,20 +58,6 @@ function getComputerSelection() {
     return computerSelection;
 }
 
-// For the player's action:
-// Allowing the buttons to initiate playRound(), capture the player's selection, and pass the playRound() arguments
-const playButtons = document.getElementsByClassName('playButton');
-let playerSelection;
-for (i=0; i<playButtons.length; i++) {
-    // *** Adding an event listener to the buttons that starts a round and gathers the id of the button pressed
-    playButtons.item(i).addEventListener('click', event => {
-        playerSelection = event.target.id;
-        playRound(playerSelection, getComputerSelection());
-        updateScore();
-    })
-}
-
-const gameBoard = document.getElementById('gameBoard');
 // A function that plays a single round and returns the round outcome
 let outcome;
 function playRound(playerSelection, computerSelection) {
@@ -74,7 +103,7 @@ function playRound(playerSelection, computerSelection) {
     const outcomeText= document.createTextNode(outcome);
     outcomeReport.appendChild(outcomeText);
     gameBoard.appendChild(outcomeReport);
-    // Returning the round outcome so the game() function can keep score, below
+    // Returning the round outcome so the playGame() function can keep score, below
     return outcome;
 }
 
@@ -102,7 +131,6 @@ function updateScore() {
     scoreBoard.appendChild(scores);
     gameBoard.appendChild(scoreBoard);
     
-
     // Declaring an ultimate winner
     let winner;
     if (playerScore === 5 || computerScore === 5) {
@@ -111,9 +139,8 @@ function updateScore() {
         } else if (computerScore > playerScore) { 
             winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
         } else {
-            winner = `It\'s a tie! ${computerScore} vs. ${playerScore}. How did that happen...?`
+            winner = "Uh, what just happened?"
         }
-        console.log(winner);
         alert(winner);
     }
 }
