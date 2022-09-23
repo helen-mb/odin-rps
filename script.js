@@ -1,6 +1,6 @@
 // A function for the computer's play
 let computerSelection;
-function getComputerChoice() {
+function getComputerSelection() {
     computerSelection = Math.floor(Math.random() * 3) + 1;
 
     // Converting numerical values into string values    
@@ -15,27 +15,31 @@ function getComputerChoice() {
     return computerSelection;
 }
 
+// For the player's play:
 // Allowing the buttons to initiate playRound(), capture the player's selection, and pass the playRound() arguments
-let playButtons = document.getElementsByClassName('playButton');
+const playButtons = document.getElementsByClassName('playButton');
 let playerSelection;
 for (i=0; i<playButtons.length; i++) {
-    // *** Adding an event listener to the buttons that starts a round and returns the id of the button pressed
+    // *** Adding an event listener to the buttons that starts a round and gathers the id of the button pressed
     playButtons.item(i).addEventListener('click', event => {
         playerSelection = event.target.id;
-        playRound(playerSelection, getComputerChoice());
+        playRound(playerSelection, getComputerSelection());
     })
 }
 
 // A function that plays a single round 
 let outcome;
 function playRound(playerSelection, computerSelection) {
+    // Creating a div inside the gameBoard for displaying the players' choices:
+    const gameBoard = document.getElementById('gameBoard');
+    const choiceDisplay = document.createElement('div'); 
 
-    // Gets player's selection for the first argument and makes it case in-sensitive
-    // playerSelection = prompt('Make your choice! Rock, Paper, or Scissors?', 'shoot...').toLowerCase();
-
-    console.log(playerSelection);
-
-    console.log(computerSelection);
+    // Displaying the competing choices in the choiceDisplay div:
+    const competingChoices = document.createTextNode(`You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`);
+    choiceDisplay.appendChild(competingChoices);
+    
+    // Adding the choiceDisplay div to the gameBoard:
+    gameBoard.appendChild(choiceDisplay);
 
     // Using a switch statement to concatenate the opposing selections into winning or losing combinations
     switch(playerSelection + computerSelection) {
