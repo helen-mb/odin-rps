@@ -103,17 +103,17 @@ function updateScore() {
     gameBoard.appendChild(scoreBoard);
     
 
-    /* // Declaring an ultimate winner
+    // Declaring an ultimate winner
     let winner;
-    if (computerScore < playerScore) { 
-        winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
-    } else if (computerScore > playerScore) { 
-        winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
-    } else {
-        winner = `It\'s a tie! ${computerScore} vs. ${playerScore}. How did that happen...?`
+    if (playerScore === 5 || computerScore === 5) {
+        if (playerScore > computerScore) { 
+            winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
+        } else if (computerScore > playerScore) { 
+            winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
+        } else {
+            winner = `It\'s a tie! ${computerScore} vs. ${playerScore}. How did that happen...?`
+        }
+        console.log(winner);
+        alert(winner);
     }
-    console.log(winner);
-    alert(winner); */
 }
-
-//game();
