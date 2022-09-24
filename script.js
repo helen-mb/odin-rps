@@ -39,19 +39,24 @@ let playGame = function () {
     })
 
     // Creating a div for displaying the players' choices inside the gameBoard:
-    const choiceDisplay = document.createElement('div');
-    choiceDisplay.setAttribute('id', 'choiceDisplay'); 
-    gameBoard.appendChild(choiceDisplay);
+    const outcomeDisplay = document.createElement('div');
+    outcomeDisplay.setAttribute('id', 'outcomeDisplay'); 
+    gameBoard.appendChild(outcomeDisplay);
 
     // Creating a div for display the scores inside the gameBoard:
     const scoreBoard = document.createElement('div'); 
     scoreBoard.setAttribute('id', 'scoreBoard');
     gameBoard.appendChild(scoreBoard);
+
+    // Creating a div for display the scores inside the gameBoard:
+    const playBack = document.createElement('div'); 
+    playBack.setAttribute('id', 'playBack');
+    gameBoard.appendChild(playBack);
 }
 // Adding an event listener to the start button so it sets up the game board when clicked
 startGame.addEventListener('click', playGame);
 
-// A function for the computer's action
+// A function to generate the computer's selection
 let computerSelection;
 function getComputerSelection() {
     computerSelection = Math.floor(Math.random() * 3) + 1;
@@ -68,69 +73,70 @@ function getComputerSelection() {
     return computerSelection;
 }
 
-// A function that plays a single round and returns the round outcome
-let outcome;
+// A function that plays a single round and returns the round outcome and appropriate commentary
+let commentary;
 function playRound(playerSelection, computerSelection) {
-    
     // Using a switch statement to concatenate the opposing selections into winning or losing combinations
     switch(playerSelection + computerSelection) {
         case 'rockROCK':
         case 'paperPAPER':
         case 'scissorsSCISSORS':
-            outcome = 'Sorry, it\'s a Draw. :?'
+            commentary = 'Sorry, it\'s a Draw. :?'
             break;
         case 'rockPAPER':
-            outcome = 'Oh no! Paper beats rock! :('
+            commentary = 'Oh no! Paper beats rock! :('
             break;
         case 'rockSCISSORS':
-            outcome = 'Yay! Rock beats scissors! :D'
+            commentary = 'Yay! Rock beats scissors! :D'
             break;
         case 'paperROCK':
-            outcome = 'Yay! Paper beats rock! :D'
+            commentary = 'Yay! Paper beats rock! :D'
             break;
         case 'paperSCISSORS':
-            outcome = 'Oh no! Scissors beats paper! :('
+            commentary = 'Oh no! Scissors beats paper! :('
             break;
         case 'scissorsROCK':
-            outcome = 'Oh no! Rock beats scissors! :('
+            commentary = 'Oh no! Rock beats scissors! :('
             break;
         case 'scissorsPAPER':
-            outcome = 'Yay! Scissors beats paper! :D'
+            commentary = 'Yay! Scissors beats paper! :D'
             break;
         default:
-            outcome = 'Sorry, what was that? :?';
+            commentary = 'Sorry, what was that? :?';
     }
 
-    // Displaying the competing choices as a new paragraph in the choiceDisplay div
-    const competingChoices = document.createElement('p');
-    const choicesText = document.createTextNode(`You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`);
-    competingChoices.appendChild(choicesText);
-    choiceDisplay.appendChild(competingChoices);
-
-    // Adding commentary on the round outcome in the choiceDisplay div
+    // Displaying the competing choices as a new paragraph in the outcomeDisplay div
     const outcomeReport = document.createElement('p');
-    const outcomeText = document.createTextNode(outcome);
-    outcomeReport.appendChild(outcomeText);
-    choiceDisplay.appendChild(outcomeReport);
-    // Returning the round outcome so the playGame() function can keep score, below
-    return outcome;
+    outcomeReport.setAttribute('id', 'outcomeReport');
+    const reportText = document.createTextNode(`You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`);
+    outcomeReport.appendChild(reportText);
+    outcomeDisplay.appendChild(outcomeReport);
+
+    // Adding commentary on the round outcome in the outcomeDisplay div
+    const outcomeCommentary = document.createElement('p');
+    outcomeCommentary.setAttribute('id', 'outcomeCommentary')
+    const commentaryText = document.createTextNode(commentary);
+    outcomeCommentary.appendChild(commentaryText);
+    outcomeDisplay.appendChild(outcomeCommentary);
+    // Returning the round commentary so the playGame() function can keep score, below
+    return commentary;
 }
 
 // A function that keeps score for up to 5 rounds
 let computerScore = 0;
 let playerScore = 0;
 function updateScore() {
-    // Changing the scores depending on the outcome of each round
+    // Changing the scores depending on the commentary of each round
     // A round does not count if it was a draw or the player input an invalid word
-    if (outcome.includes('Yay!')) {
+    if (commentary.includes('Yay!')) {
         computerScore += 0;
         playerScore += 1;
-    } else if (outcome.includes('Oh no!')) {
+    } else if (commentary.includes('Oh no!')) {
         computerScore += 1;
         playerScore += 0;
     }
         
-    // Displaying the updated scores as a new paragraph in the choiceDisplay div:
+    // Displaying the updated scores as a new paragraph in the outcomeDisplay div:
     const scores = document.createElement('p');
     const scoreValues = document.createTextNode(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
     scores.appendChild(scoreValues);
