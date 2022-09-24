@@ -1,5 +1,19 @@
 const gameBoard = document.getElementById('gameBoard');
 const startGame = document.getElementById('startGame');
+let winner = null;
+// creating the rock button but not appending it to the DOM yet
+const rockButton = document.createElement('button');
+const rock = document.createTextNode('rock');
+rockButton.setAttribute('id', 'rock');
+// creating the paper button but not appending it to the DOM yet
+const paperButton = document.createElement('button');
+const paper = document.createTextNode('paper');
+paperButton.setAttribute('id', 'paper');
+// creating the paper button but not appending it to the DOM yet
+const scissorsButton = document.createElement('button');
+const scissors = document.createTextNode('scissors')
+scissorsButton.setAttribute('id', 'scissors');
+
 // A function to set up the game board
 let playGame = function () {
     // The start button replaces itself with an instruction and a new set of play buttons 
@@ -8,23 +22,13 @@ let playGame = function () {
     const instruction = document.createTextNode('Choose your weapon!');
     newP.appendChild(instruction);
     gameBoard.appendChild(newP);
-    // Creates the buttons that initiate a round
-    // The rock button
-    const rockButton = document.createElement('button');
-    const rock = document.createTextNode('rock')
-    rockButton.setAttribute('id', 'rock');
+    // Appends the rock button
     rockButton.appendChild(rock);
     gameBoard.appendChild(rockButton);
-    // The paper button
-    const paperButton = document.createElement('button');
-    const paper = document.createTextNode('paper')
-    paperButton.setAttribute('id', 'paper');
+    // Appends the paper button
     paperButton.appendChild(paper);
     gameBoard.appendChild(paperButton);
-    // The scissors button
-    const scissorsButton = document.createElement('button');
-    const scissors = document.createTextNode('scissors')
-    scissorsButton.setAttribute('id', 'scissors');
+    // Appends the scissors button
     scissorsButton.appendChild(scissors);
     gameBoard.appendChild(scissorsButton);
 
@@ -43,12 +47,12 @@ let playGame = function () {
     outcomeDisplay.setAttribute('id', 'outcomeDisplay'); 
     gameBoard.appendChild(outcomeDisplay);
 
-    // Creating a div for display the scores inside the gameBoard:
+    // Creating a div for displaying the scores inside the gameBoard:
     const scoreBoard = document.createElement('div'); 
     scoreBoard.setAttribute('id', 'scoreBoard');
     gameBoard.appendChild(scoreBoard);
 
-    // Creating a div for display the scores inside the gameBoard:
+    // Creating a playback div for displaying the game history inside the gameBoard:
     const playBack = document.createElement('div'); 
     playBack.setAttribute('id', 'playBack');
     gameBoard.appendChild(playBack);
@@ -138,13 +142,14 @@ function updateScore() {
         
     // Displaying the updated scores as a new paragraph in the outcomeDisplay div:
     const scores = document.createElement('p');
+    scores.setAttribute('id', 'scores');
     const scoreValues = document.createTextNode(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
     scores.appendChild(scoreValues);
     scoreBoard.appendChild(scores);
     
-    // Declaring an ultimate winner
-    let winner;
+    // Once a score reaches 5, a winner is declared
     if (playerScore === 5 || computerScore === 5) {
+        // Declaring the ultimate winner
         if (playerScore > computerScore) { 
             winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
         } else if (computerScore > playerScore) { 
@@ -152,6 +157,10 @@ function updateScore() {
         } else {
             winner = "Uh, what just happened?"
         }
-        alert(winner);
+        alert(winner);        
+        // Removing the buttons once a winner is declared.
+        gameBoard.removeChild(rockButton);
+        gameBoard.removeChild(paperButton);
+        gameBoard.removeChild(scissorsButton);
     }
 }
