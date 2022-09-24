@@ -37,6 +37,16 @@ let playGame = function () {
             updateScore();
         })
     })
+
+    // Creating a div for displaying the players' choices inside the gameBoard:
+    const choiceDisplay = document.createElement('div');
+    choiceDisplay.setAttribute('id', 'choiceDisplay'); 
+    gameBoard.appendChild(choiceDisplay);
+
+    // Creating a div for display the scores inside the gameBoard:
+    const scoreBoard = document.createElement('div'); 
+    scoreBoard.setAttribute('id', 'scoreBoard');
+    gameBoard.appendChild(scoreBoard);
 }
 // Adding an event listener to the start button so it sets up the game board when clicked
 startGame.addEventListener('click', playGame);
@@ -61,16 +71,7 @@ function getComputerSelection() {
 // A function that plays a single round and returns the round outcome
 let outcome;
 function playRound(playerSelection, computerSelection) {
-    // Creating a div for displaying the players' choices inside the gameBoard:
-//xxx This creates a new div every round whereas I only need one div... maybe a "start game" function can do it?
-    const choiceDisplay = document.createElement('div'); 
-    // Displaying the competing choices as a new paragraph in the choiceDisplay div:
-    const competingChoices = document.createElement('p');
-    const choicesText = document.createTextNode(`You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`);
-    competingChoices.appendChild(choicesText);
-    choiceDisplay.appendChild(competingChoices);
-    gameBoard.appendChild(choiceDisplay);
-
+    
     // Using a switch statement to concatenate the opposing selections into winning or losing combinations
     switch(playerSelection + computerSelection) {
         case 'rockROCK':
@@ -99,10 +100,18 @@ function playRound(playerSelection, computerSelection) {
         default:
             outcome = 'Sorry, what was that? :?';
     }
+
+    // Displaying the competing choices as a new paragraph in the choiceDisplay div
+    const competingChoices = document.createElement('p');
+    const choicesText = document.createTextNode(`You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`);
+    competingChoices.appendChild(choicesText);
+    choiceDisplay.appendChild(competingChoices);
+
+    // Adding commentary on the round outcome in the choiceDisplay div
     const outcomeReport = document.createElement('p');
-    const outcomeText= document.createTextNode(outcome);
+    const outcomeText = document.createTextNode(outcome);
     outcomeReport.appendChild(outcomeText);
-    gameBoard.appendChild(outcomeReport);
+    choiceDisplay.appendChild(outcomeReport);
     // Returning the round outcome so the playGame() function can keep score, below
     return outcome;
 }
@@ -121,15 +130,11 @@ function updateScore() {
         playerScore += 0;
     }
         
-    // Declaring the outcome and score of each round
-//xxx This creates a new div every round whereas I only need one div... maybe a "start game" function can do it?
-    const scoreBoard = document.createElement('div'); 
     // Displaying the updated scores as a new paragraph in the choiceDisplay div:
     const scores = document.createElement('p');
     const scoreValues = document.createTextNode(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
     scores.appendChild(scoreValues);
     scoreBoard.appendChild(scores);
-    gameBoard.appendChild(scoreBoard);
     
     // Declaring an ultimate winner
     let winner;
