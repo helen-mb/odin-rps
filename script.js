@@ -1,9 +1,9 @@
 // Setting variables...
 // Variables of elements that ALREADY EXIST:
 const gameBoard = document.getElementById('gameBoard');
-const startGame = document.getElementById('startGame');
+const game = document.getElementById('game');
 // Things that WILL BE ADDED to the gameBoard once the startGame button is pressed:
-// qn instruction to replace the startGame button (gets appended by startGame; removed at game end)
+// an instruction to replace the game button (gets appended by startGame; removed at game end)
 const instruction = document.createElement('p');
 const instructionText = document.createTextNode('Choose your weapon!');
 instruction.appendChild(instructionText);
@@ -38,14 +38,18 @@ scoreBoard.setAttribute('id', 'scoreBoard');
 const scores = document.createElement('p');
 scores.setAttribute('id', 'scores');
 scoreBoard.appendChild(scores);
-// a div for displaying the game history inside the gameBoard (gets appended by startGame; modified by playRound)
-const playBack = document.createElement('div'); 
+// Things that WILL BE ADDED at the end of the game:
+// a div for displaying the game history inside the gameBoard (gets appended by endGame; modified by playRound)
+const gameHistory = document.createElement('div'); 
+gameHistory.setAttribute('id', 'gameHistory');
+const playBack = document.createElement('ol');
 playBack.setAttribute('id', 'playBack');
+gameHistory.appendChild(playBack);
 
 // A function to set up the game board
-const playGame = function () {
+const startGame = function () {
     // The start button replaces itself with an instruction and a new set of game buttons 
-    gameBoard.removeChild(startGame);
+    gameBoard.removeChild(game);
     gameBoard.appendChild(instruction);
     // Appends the game buttons to the DOM
     gameBoard.appendChild(rockButton);
@@ -54,7 +58,6 @@ const playGame = function () {
     // Appends the remaining sections of the gameBoard
     gameBoard.appendChild(outcomeDisplay);
     gameBoard.appendChild(scoreBoard);
-    gameBoard.appendChild(playBack);
     // Adds an event listener to the BUTTONS that initiates a round, and collects the player and computer's selections
     const gameButtons = document.querySelectorAll('button');
     gameButtons.forEach(button => {
@@ -66,8 +69,25 @@ const playGame = function () {
     })
 }
 
-// Adding an event listener to the start button that runs the playGame function (sets up the game board) when clicked
-startGame.addEventListener('click', playGame);
+// A function for ENDING THE GAME:
+const endGame = function () {
+    // Once a score reaches 5, a winner is declared, the buttons are removed, and the gameHistory gets appended
+    if (playerScore > computerScore) { 
+        winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
+    } else if (computerScore > playerScore) { 
+        winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
+    } else {
+        winner = "Uh, what just happened?"
+    }       
+    const gameButtons = document.querySelectorAll('button');
+    gameButtons.forEach(button => gameBoard.removeChild(button));
+    gameBoard.removeChild(instruction);
+    gameBoard.appendChild(gameHistory);
+    alert(winner); 
+}
+
+// Adding an event listener to the start button that runs the startGame function (sets up the game board) when clicked
+game.addEventListener('click', startGame);
 
 // A function to generate the computer's selection for the playRound function
 let computerSelection;
@@ -116,9 +136,15 @@ function playRound(playerSelection, computerSelection) {
             commentary = 'Sorry, what was that? :?';
     }
     // Displaying the competing choices and some commentary in the outcomeDisplay div
-    document.getElementById("outcomeReport").innerHTML = `You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`;
+    const outcomeText = `You chose "${playerSelection}" -- The computer chose "${computerSelection}"!`
+    document.getElementById("outcomeReport").innerHTML = `${outcomeText}`;
     document.getElementById("outcomeCommentary").innerHTML = `${commentary}`;
-    // Returning the round commentary so the playGame() function can keep score, below
+    // Adding the outcomeText to the gameHistory's playBack list (get appended to the gameHistory section by endGame)
+    const playBackRound = document.createElement('li');
+    const playBackText = document.createTextNode(`${outcomeText}`);
+    playBackRound.appendChild(playBackText);
+    playBack.appendChild(playBackRound);
+    // Returning the round commentary so the updateScore() function can keep score
     return commentary;
 }
 
@@ -137,20 +163,7 @@ function updateScore() {
     }
     // Displaying the updated scores in the scoreBoard div:
     document.getElementById("scores").innerHTML = (`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
-    // ENDING THE GAME:
-    // Once a score reaches 5, a winner is declared, and the buttons are removed
     if (playerScore === 5 || computerScore === 5) {
-        // Declaring the ultimate winner
-        if (playerScore > computerScore) { 
-            winner = `And the winner is... You, the player! With a final score of ${playerScore} vs. ${computerScore}.`
-        } else if (computerScore > playerScore) { 
-            winner = `And the winner is... The computer! With a final score of ${computerScore} vs. ${playerScore}.`
-        } else {
-            winner = "Uh, what just happened?"
-        }       
-        const gameButtons = document.querySelectorAll('button');
-        gameButtons.forEach(button => gameBoard.removeChild(button));
-        gameBoard.removeChild(instruction);
-        alert(winner); 
-    }
+        endGame()
+    };
 }
