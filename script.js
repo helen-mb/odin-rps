@@ -2,6 +2,7 @@
 // Variables of elements that ALREADY EXIST:
 const gameBoard = document.getElementById('gameBoard');
 const game = document.getElementById('game');
+const megaphone = document.getElementById('megaphone');
 // Things that WILL BE ADDED to the gameBoard once the startGame button is pressed:
 // an instruction to replace the game button (gets appended by startGame; removed at game end)
 const instruction = document.createElement('p');
@@ -68,8 +69,11 @@ const startGame = function () {
         })
     })
 }
+// Adding an event listener to the start button that runs the startGame function (sets up the game board) when clicked
+game.addEventListener('click', startGame);
 
 // A function for ENDING THE GAME:
+let winner;
 const endGame = function () {
     // Once a score reaches 5, a winner is declared, the buttons are removed, and the gameHistory gets appended
     if (playerScore > computerScore) { 
@@ -82,12 +86,10 @@ const endGame = function () {
     const gameButtons = document.querySelectorAll('button');
     gameButtons.forEach(button => gameBoard.removeChild(button));
     gameBoard.removeChild(instruction);
+    gameBoard.removeChild(outcomeDisplay);
     gameBoard.appendChild(gameHistory);
-    alert(winner); 
+    document.getElementById('megaphone').innerHTML = winner;
 }
-
-// Adding an event listener to the start button that runs the startGame function (sets up the game board) when clicked
-game.addEventListener('click', startGame);
 
 // A function to generate the computer's selection for the playRound function
 let computerSelection;
@@ -151,7 +153,6 @@ function playRound(playerSelection, computerSelection) {
 // A function that keeps score for up to 5 rounds
 let computerScore = 0;
 let playerScore = 0;
-let winner = null;
 function updateScore() {
     // Changing the scores depending on the commentary of each round
     if (commentary.includes('Yay!')) {
