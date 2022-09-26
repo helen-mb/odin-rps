@@ -150,36 +150,6 @@ function playRound(playerSelection, computerSelection) {
     return commentary;
 }
 
-<<<<<<< HEAD
-// A function that plays five rounds and keeps score
-function game() {
-    let round;
-    let computerScore = 0;
-    let playerScore = 0;
-
-    // Using a while loop to play the best of five rounds of playRound()
-    let i = 1
-    while (i <= 5) {
-        round = i;
-        playRound();
-
-        // Changing the scores depending on the outcome of each round
-        // A round does not count if it was a draw or the player input an invalid word
-        
-        if (outcome.includes('Yay!')) {
-            computerScore += 0;
-            playerScore += 1;
-            i++;
-        } else if (outcome.includes('Oh no!')) {
-            computerScore += 1;
-            playerScore += 0;
-            i++;
-        } 
-
-        // Declaring the outcome and score of each round
-        console.log(`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
-        alert(outcome);
-=======
 // A function that keeps score for up to 5 rounds
 let computerScore = 0;
 let playerScore = 0;
@@ -191,7 +161,6 @@ function updateScore() {
     } else if (commentary.includes('Oh no!')) {
         computerScore += 1;
         playerScore += 0;
->>>>>>> rps-ui
     }
     // Displaying the updated scores in the scoreBoard div:
     document.getElementById("scores").innerHTML = (`The scores are: Computer ${computerScore}, Player ${playerScore}!`);
