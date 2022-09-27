@@ -1,8 +1,9 @@
 // Setting variables...
 // Variables of elements that ALREADY EXIST:
 const gameBoard = document.getElementById('gameBoard');
-const game = document.getElementById('game');
 const megaphone = document.getElementById('megaphone');
+const buttonContainer = document.getElementById('buttonContainer');
+const game = document.getElementById('game');
 // Things that WILL BE ADDED to the gameBoard once the startGame button is pressed:
 // an instruction to replace the game button (gets appended by startGame; removed at game end)
 const instruction = document.createElement('p');
@@ -50,12 +51,12 @@ gameHistory.appendChild(playBack);
 // A function to set up the game board
 const startGame = function () {
     // The start button replaces itself with an instruction and a new set of game buttons 
-    gameBoard.removeChild(game);
-    gameBoard.appendChild(instruction);
+    gameBoard.insertBefore(instruction, buttonContainer);
+    buttonContainer.removeChild(game);
     // Appends the game buttons to the DOM
-    gameBoard.appendChild(rockButton);
-    gameBoard.appendChild(paperButton);
-    gameBoard.appendChild(scissorsButton);
+    buttonContainer.appendChild(rockButton);
+    buttonContainer.appendChild(paperButton);
+    buttonContainer.appendChild(scissorsButton);
     // Appends the remaining sections of the gameBoard
     gameBoard.appendChild(outcomeDisplay);
     gameBoard.appendChild(scoreBoard);
@@ -84,7 +85,7 @@ const endGame = function () {
         winner = "Uh, what just happened?"
     }       
     const gameButtons = document.querySelectorAll('button');
-    gameButtons.forEach(button => gameBoard.removeChild(button));
+    gameButtons.forEach(button => buttonContainer.removeChild(button));
     gameBoard.removeChild(instruction);
     gameBoard.removeChild(outcomeDisplay);
     gameBoard.appendChild(gameHistory);

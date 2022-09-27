@@ -1,0 +1,17 @@
+h1, h2, p {
+    text-align: center;
+}
+#gameBoard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#buttonContainer {
+    display: flex;
+    justify-content: center;
+    padding: 20px 33%;
+}
+#rock, #paper, #scissors {
+    margin: auto;
+    width: 80px;
+}
