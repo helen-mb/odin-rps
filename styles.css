@@ -1,17 +1,43 @@
 h1, h2, p {
     text-align: center;
 }
+button {
+    font-family: monospace;
+    font-size: large;
+    width: 150px;
+    padding: 6px 0px;
+}
 #gameBoard {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
+#megaphone {
+    font-style: italic;
+}
+#instruction {
+    margin: 0px;
+}
 #buttonContainer {
     display: flex;
     justify-content: center;
-    padding: 20px 33%;
+    padding: 16px 33%;
 }
 #rock, #paper, #scissors {
     margin: auto;
-    width: 80px;
+}
+#outcomeDisplay {
+    border-style: groove;
+    border-color: black;
+    width: 33%;
+    margin: 0 auto;
+}
+#scores {
+    font-weight: bold;
+}
+#gameHistory {
+    border-style: groove;
+    border-color: black;
+    width: 33%;
+    margin: 0 auto;
 }

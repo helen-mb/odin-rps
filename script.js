@@ -7,7 +7,8 @@ const game = document.getElementById('game');
 // Things that WILL BE ADDED to the gameBoard once the startGame button is pressed:
 // an instruction to replace the game button (gets appended by startGame; removed at game end)
 const instruction = document.createElement('p');
-const instructionText = document.createTextNode('Choose your weapon!');
+const instructionText = document.createTextNode('Choose your weapon...');
+instruction.setAttribute('id', 'instruction')
 instruction.appendChild(instructionText);
 // the rock button (gets appended by startGame; removed at game end)
 const rockButton = document.createElement('button');
@@ -51,6 +52,7 @@ gameHistory.appendChild(playBack);
 // A function to set up the game board
 const startGame = function () {
     // The start button replaces itself with an instruction and a new set of game buttons 
+    document.getElementById('megaphone').innerHTML = 'Game On!';
     gameBoard.insertBefore(instruction, buttonContainer);
     buttonContainer.removeChild(game);
     // Appends the game buttons to the DOM
@@ -59,6 +61,7 @@ const startGame = function () {
     buttonContainer.appendChild(scissorsButton);
     // Appends the remaining sections of the gameBoard
     gameBoard.appendChild(outcomeDisplay);
+    document.getElementById("outcomeReport").innerHTML = 'Who will be the ultimate champion?';
     gameBoard.appendChild(scoreBoard);
     // Adds an event listener to the BUTTONS that initiates a round, and collects the player and computer's selections
     const gameButtons = document.querySelectorAll('button');
@@ -87,7 +90,9 @@ const endGame = function () {
     const gameButtons = document.querySelectorAll('button');
     gameButtons.forEach(button => buttonContainer.removeChild(button));
     gameBoard.removeChild(instruction);
+    gameBoard.removeChild(buttonContainer);
     gameBoard.removeChild(outcomeDisplay);
+    gameBoard.removeChild(scoreBoard);
     gameBoard.appendChild(gameHistory);
     document.getElementById('megaphone').innerHTML = winner;
 }
